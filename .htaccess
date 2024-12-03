@@ -1,0 +1,12 @@
+# Habilita a reescrita de URLs
+
+RewriteEngine On
+
+# Se a solicitação for para um arquivo ou diretório existente, não redireciona
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Reescreve todas as outras solicitações para index.php
+
+RewriteRule ^(.\*)$ index.php/$1 [L]

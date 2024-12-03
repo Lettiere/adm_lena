@@ -1,0 +1,61 @@
+{
+  "pages": [
+    {
+      "name": "Cidades",
+      "icon": "bx-store",
+      "url": "/urbanismo/cidade"
+    },
+    {
+      "name": "Ruas",
+      "icon": "bx-store",
+      "url": "/urbanismo/rua"
+    },
+    {
+      "name": "Bairros",
+      "icon": "bx-store",
+      "url": "/urbanismo/bairro"
+    },
+    {
+      "name": "Imóveis",
+      "icon": "bx-store",
+      "url": "/urbanismo/imovel"
+    },
+    {
+      "name": "Povoados",
+      "icon": "bx-store",
+      "url": "/urbanismo/povoado"
+    },
+    {
+      "name": "Cadastros de Cidadão",
+      "icon": "bx-user",
+      "url": "/cidadao"
+    },
+    {
+      "name": "Gêneros",
+      "icon": "bx-user",
+      "url": "/cidadao/genero"
+    },
+    {
+      "name": "Orgão Emissor (DOC)",
+      "icon": "bx-user",
+      "url": "/cidadao/orgao_emissor"
+    }
+  ],
+  "files": [
+    {
+      "name": "Arquivo de teste",
+      "subtitle": "arquivos poderão ser encontrados aqui",
+      "src": "img/icons/misc/search-xls.png",
+      "meta": "17kb",
+      "url": "/"
+    }
+  ],
+  "members": [
+    {
+      "name": "Belo Campo",
+      "subtitle": "Cliente",
+      "src": "img/avatars/1.png",
+      "url": "/"
+    }
+  ]
+}
