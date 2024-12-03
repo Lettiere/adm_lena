@@ -31,6 +31,7 @@
     </div>
 </div>
 
+
 <!-- Exibe mensagens de erro ou sucesso -->
 <?php if (session()->getFlashdata('error')): ?>
 <div class="alert alert-danger">
@@ -38,39 +39,23 @@
 </div>
 <?php endif; ?>
 
-<?php if (session()->getFlashdata('success')): ?>
-<div class="alert alert-success">
-    <?= session()->getFlashdata('success') ?>
-</div>
-<?php endif; ?>
-
 <div class="col-12 mt-3">
     <div class="bs-stepper py-3 px-3">
         <!-- Formulário de cadastro de produto -->
-        <form action="<?= site_url('produto/salvar') ?>" method="POST">
-            <!-- Campo Categoria -->
+        <!-- Formulário de cadastro de categoria -->
+        <form action="<?= site_url('categoria/salvar') ?>" method="POST">
+            <!-- Campo Nome da Categoria -->
             <div class="mb-3">
-                <label for="prod_categoria_id" class="form-label">Categoria</label>
-                <select name="prod_categoria_id" id="prod_categoria_id" class="form-control" required>
-                    <option value="">Selecione a Categoria</option>
-                    <?php foreach ($categorias as $categoria): ?>
-                    <option value="<?= $categoria['prod_categoria_id'] ?>"><?= $categoria['nome_categoria'] ?></option>
-                    <?php endforeach; ?>
-                </select>
+                <label for="nome_categoria" class="form-label">Nome da Categoria</label>
+                <input type="text" class="form-control" id="nome_categoria" name="nome_categoria" required>
             </div>
-
-            <!-- Campo Nome do Produto -->
-            <div class="mb-3">
-                <label for="nome_produto" class="form-label">Nome do Produto</label>
-                <input type="text" class="form-control" id="nome_produto" name="nome_produto" required>
-            </div>
-
             <!-- Botões -->
             <div class="d-flex justify-content-between">
-                <a href="<?= site_url('produto') ?>" class="btn btn-secondary">Voltar para Produtos</a>
+                <a href="<?= site_url('categoria') ?>" class="btn btn-secondary">Voltar para Categorias</a>
                 <button type="submit" class="btn btn-primary">Gravar</button>
             </div>
         </form>
+
     </div>
 </div>
 

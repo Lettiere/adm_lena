@@ -29,17 +29,17 @@ class Categoria extends Controller
         // Instancia o modelo
         $categoriaModel = new CategoriaModel();
 
-        // Recupera os dados do formulário
-        $nome_categoria = $this->request->getPost('nome_categoria');
-
-        // Validação simples do nome da categoria
-        if (empty($nome_categoria)) {
-            return redirect()->back()->with('error', 'O nome da categoria é obrigatório.');
+        // Definir regras de validação
+        if (!$this->validate([
+            'nome_categoria' => 'required|max_length[255]'
+        ])) {
+            // Caso falhe a validação, envia o erro de volta para a view
+            return redirect()->back()->withInput()->with('error', 'O nome da categoria é obrigatório.');
         }
 
         // Dados a serem salvos
         $data = [
-            'nome_categoria' => $nome_categoria
+            'nome_categoria' => $this->request->getPost('nome_categoria')
         ];
 
         // Tenta inserir a nova categoria
