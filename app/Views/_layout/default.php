@@ -144,11 +144,11 @@
                                     </li>
 
                                     <li class="menu-item">
-                                        <a href="cadastrar_cidadao.php" class="menu-link">
+                                        <a href="<?= base_url('subcategoria') ?>" class="menu-link">
                                             <div class="text-truncate" data-i18n="Subcategoria">SubCategoria</div>
                                         </a>
                                     </li>
-                                    <li class="menu-item">
+                                    <!--     <li class="menu-item">
                                         <a href="cadastrar_instituicao.php" class="menu-link">
                                             <div class="text-truncate" data-i18n="Instituição">Instituição</div>
                                         </a>
@@ -157,7 +157,7 @@
                                         <a href="ver_cidadao.php" class="menu-link">
                                             <div class="text-truncate" data-i18n="Repasse">Repasse</div>
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </li>
 
@@ -673,7 +673,7 @@
                         <div class="mb-2 mb-md-0">
                             ©
                             <script>
-                            document.write(new Date().getFullYear());
+                                document.write(new Date().getFullYear());
                             </script>, feito com ❤️ por
                             <a href="https://akashi.app.br" target="_blank" class="footer-link fw-medium">Akashi</a>
                         </div>

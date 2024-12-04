@@ -5,20 +5,20 @@
 <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.css') ?>">
 
 <style>
-.sinopse {
-    max-width: 150px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
+    .sinopse {
+        max-width: 150px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 
-.sinopse-completa {
-    display: none;
-}
+    .sinopse-completa {
+        display: none;
+    }
 
-.sinopse:hover .sinopse-completa {
-    display: block;
-}
+    .sinopse:hover .sinopse-completa {
+        display: block;
+    }
 </style>
 <?= $this->endSection('css') ?>
 
@@ -30,13 +30,11 @@
         </div>
     </div>
 </div>
-
-
 <!-- Exibe mensagens de erro ou sucesso -->
 <?php if (session()->getFlashdata('error')): ?>
-<div class="alert alert-danger">
-    <?= session()->getFlashdata('error') ?>
-</div>
+    <div class="alert alert-danger">
+        <?= session()->getFlashdata('error') ?>
+    </div>
 <?php endif; ?>
 
 <div class="col-12 mt-3">
@@ -58,9 +56,7 @@
 
     </div>
 </div>
-
 <?= $this->endSection() ?>
-
 <?= $this->section('js') ?>
 <!-- Aqui você pode adicionar scripts adicionais caso necessário -->
 <?= $this->endSection() ?>

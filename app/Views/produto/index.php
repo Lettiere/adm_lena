@@ -27,7 +27,6 @@
 <div class="col-12">
 
     <div class="bs-stepper py-3">
-        <h3 class="py-3">Seus Produtos</h3>
         <div class="d-flex justify-content-between align-items-center py-3">
             <h3 class="py-3">Seus Produtos</h3>
             <a href="<?= site_url('produto/create') ?>" class="btn btn-success">Novo Produto</a> <!-- Corrigido -->
@@ -45,39 +44,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Exemplo de produtos - isso seria gerado dinamicamente -->
+                    <?php foreach ($produtos as $produto): ?>
                     <tr>
-                        <td>1</td>
-                        <td>REF12345</td> <!-- Código de referência -->
-                        <td><img src="caminho/para/imagem.jpg" alt="Imagem do Produto A" width="50" height="50"></td>
+                        <td><?= $produto['prod_produto_id'] ?></td>
+                        <td><?= $produto['codigo_barras'] ?></td> <!-- Código de referência -->
+                        <td><img src="<?= base_url('uploads/' . $produto['imagem_produto']) ?>"
+                                alt="Imagem do Produto <?= $produto['nome_produto'] ?>" width="50" height="50"></td>
                         <td class="sinopse">
-                            <span><strong>Produto A</strong></span><br>
-                            <span class="sinopse-completa">Descrição completa do Produto A que contém mais detalhes e
-                                informações.</span>
+                            <span><strong><?= $produto['nome_produto'] ?></strong></span><br>
+                            <span class="sinopse-completa"><?= $produto['descricao_produto'] ?></span>
                         </td>
-                        <td>R$ 10,00</td>
+                        <td><?= number_format($produto['preco_venda'], 2, ',', '.') ?></td>
                         <td>
-                            <a href="<?= site_url('produto/edit/1') ?>" class="btn btn-sm btn-primary">Editar</a>
+                            <a href="<?= site_url('produto/edit/' . $produto['prod_produto_id']) ?>"
+                                class="btn btn-sm btn-primary">Editar</a>
                             <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                data-bs-target="#modalAtivarDesativar" data-produto-id="1">Ativo</button>
+                                data-bs-target="#modalAtivarDesativar"
+                                data-produto-id="<?= $produto['prod_produto_id'] ?>">Ativo</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>REF67890</td> <!-- Código de referência -->
-                        <td><img src="caminho/para/imagem2.jpg" alt="Imagem do Produto B" width="50" height="50"></td>
-                        <td class="sinopse">
-                            <span><strong>Produto B</strong></span><br>
-                            <span class="sinopse-completa">Descrição completa do Produto B, com mais informações sobre o
-                                que ele faz e como funciona.</span>
-                        </td>
-                        <td>R$ 20,00</td>
-                        <td>
-                            <a href="<?= site_url('produto/edit/2') ?>" class="btn btn-sm btn-primary">Editar</a>
-                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                data-bs-target="#modalAtivarDesativar" data-produto-id="2">Ativo</button>
-                        </td>
-                    </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

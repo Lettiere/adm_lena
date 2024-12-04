@@ -26,10 +26,9 @@
 <div class="col-12">
 
     <div class="bs-stepper py-3 px-3">
-
         <div class="d-flex justify-content-between align-items-center py-3">
             <h3 class="py-3">SubCategorias</h3>
-            <a href="<?= site_url('categoria/create') ?>" class="btn btn-success">Novo Cadastro</a> <!-- Corrigido -->
+            <a href="<?= site_url('subcategoria/create') ?>" class="btn btn-success">Novo Cadastro</a>
         </div>
         <div class="card-datatable table-responsive pt-0">
             <table class="datatables-basic table border-top" id="datatables-basic">
@@ -37,15 +36,20 @@
                     <tr>
                         <th>ID</th>
                         <th>Nome da Subcategoria</th>
+                        <th>Categoria</th>
                         <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($categorias as $categoria): ?>
+                    <?php foreach ($subcategorias as $subcategoria): ?>
                     <tr>
-                        <td><?= $categoria['prod_subcategoria_id'] ?></td>
-                        <td><?= $categoria['nome_subcategoria'] ?></td>
-                        <td><a href="#">Editar</a></td>
+                        <td><?= $subcategoria['prod_subcategoria_id'] ?></td>
+                        <td><?= $subcategoria['nome_subcategoria'] ?></td>
+                        <td><?= $subcategoria['nome_categoria'] ?></td>
+                        <td>
+                            <a href="#">Editar</a> |
+                            <a href="#">Excluir</a>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

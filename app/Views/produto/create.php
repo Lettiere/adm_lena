@@ -1,76 +1,201 @@
 <?= $this->extend('_layout/default') ?>
 
 <?= $this->section('css') ?>
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="<?= base_url('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.css') ?>">
-
-<style>
-.sinopse {
-    max-width: 150px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.sinopse-completa {
-    display: none;
-}
-
-.sinopse:hover .sinopse-completa {
-    display: block;
-}
-</style>
-<?= $this->endSection('css') ?>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<?= $this->endsection() ?>
 
 <?= $this->section('content') ?>
-<div class="col-12">
-    <div class="bs-stepper py-3 px-3">
-        <div class="d-flex justify-content-between align-items-center py-3">
-            <h3 class="py-3">Cadastro de Categoria</h3>
+
+<!-- Incluindo o CSS do Bootstrap -->
+<div class="container mt-5">
+    <h1>Cadastrar Produto</h1>
+    <form action="<?= site_url('produto/salvar') ?>" method="POST" enctype="multipart/form-data">
+        <!-- Campo Categoria -->
+        <div class="form-group">
+            <label for="prod_categoria_id">Categoria:</label>
+            <select id="prod_categoria_id" name="prod_categoria_id" class="form-control" required>
+                <option value="">Selecione...</option>
+                <?php foreach ($categorias as $categoria): ?>
+                    <option value="<?= $categoria['prod_categoria_id']; ?>"
+                        <?= isset($produto['prod_categoria_id']) && $produto['prod_categoria_id'] == $categoria['prod_categoria_id'] ? 'selected' : ''; ?>>
+                        <?= $categoria['nome_categoria']; ?>
+                    </option>
+
+                <?php endforeach; ?>
+            </select>
         </div>
-    </div>
+
+
+        <!-- Campo Subcategoria -->
+        <div class="form-group">
+            <label for="prod_subcategoria_id">Subcategoria:</label>
+            <select id="prod_subcategoria_id" name="prod_subcategoria_id" class="form-control">
+                <option value="">Selecione...</option>
+                <?php foreach ($subcategorias as $subcategoria): ?>
+                    <option value="<?= $subcategoria['prod_subcategoria_id']; ?>"
+                        <?= set_select('prod_subcategoria_id', $subcategoria['prod_subcategoria_id'], (old('prod_subcategoria_id') == $subcategoria['prod_subcategoria_id']) ? true : false); ?>>
+                        <?= $subcategoria['nome_subcategoria']; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <?= \Config\Services::validation()->getError('prod_subcategoria_id'); ?>
+        </div>
+
+
+        <!-- Nome do Produto -->
+        <div class="form-group">
+            <label for="nome_produto">Nome do Produto:</label>
+            <input type="text" id="nome_produto" name="nome_produto" class="form-control" required>
+        </div>
+
+        <!-- Código de Barras -->
+        <div class="form-group">
+            <label for="codigo_barras">Código de Barras:</label>
+            <input type="text" id="codigo_barras" name="codigo_barras" class="form-control" maxlength="13" required>
+        </div>
+
+        <!-- Descrição do Produto -->
+        <div class="form-group">
+            <label for="descricao_produto">Descrição do Produto:</label>
+            <textarea id="descricao_produto" name="descricao_produto" class="form-control" rows="4" required></textarea>
+        </div>
+
+        <!-- Subcategoria do Produto -->
+        <div class="form-group">
+            <label for="subcategoria_produto">Subcategoria do Produto:</label>
+            <input type="text" id="subcategoria_produto" name="subcategoria_produto" class="form-control">
+        </div>
+
+        <!-- Dimensões do Produto -->
+        <div class="form-group">
+            <label for="dimensoes_produto">Dimensões do Produto:</label>
+            <input type="text" id="dimensoes_produto" name="dimensoes_produto" class="form-control">
+        </div>
+
+        <!-- Peso do Produto -->
+        <div class="form-group">
+            <label for="peso_produto">Peso do Produto (g):</label>
+            <input type="number" id="peso_produto" name="peso_produto" class="form-control" min="0">
+        </div>
+
+        <!-- Cor do Produto -->
+        <div class="form-group">
+            <label for="cor_produto">Cor do Produto:</label>
+            <input type="text" id="cor_produto" name="cor_produto" class="form-control">
+        </div>
+
+        <!-- Material da Embalagem -->
+        <div class="form-group">
+            <label for="material_embalagem">Material da Embalagem:</label>
+            <input type="text" id="material_embalagem" name="material_embalagem" class="form-control">
+        </div>
+
+        <!-- Temperatura de Armazenamento -->
+        <div class="form-group">
+            <label for="temperatura_armazenamento">Temperatura de Armazenamento:</label>
+            <input type="text" id="temperatura_armazenamento" name="temperatura_armazenamento" class="form-control">
+        </div>
+
+        <!-- Tabela Nutricional -->
+        <div class="form-group">
+            <label for="tabela_nutricional">Tabela Nutricional:</label>
+            <textarea id="tabela_nutricional" name="tabela_nutricional" class="form-control" rows="4"></textarea>
+        </div>
+
+        <!-- Alergenos -->
+        <div class="form-group">
+            <label for="alergenos">Alergenos:</label>
+            <textarea id="alergenos" name="alergenos" class="form-control" rows="4"></textarea>
+        </div>
+
+        <!-- Preço de Custo -->
+        <div class="form-group">
+            <label for="preco_custo">Preço de Custo:</label>
+            <input type="number" id="preco_custo" name="preco_custo" class="form-control" step="0.01" min="0">
+        </div>
+
+        <!-- Preço de Venda -->
+        <div class="form-group">
+            <label for="preco_venda">Preço de Venda:</label>
+            <input type="number" id="preco_venda" name="preco_venda" class="form-control" step="0.01" min="0">
+        </div>
+
+        <!-- Impostos -->
+        <div class="form-group">
+            <label for="impostos">Impostos:</label>
+            <input type="text" id="impostos" name="impostos" class="form-control">
+        </div>
+
+        <!-- Fornecedor -->
+        <div class="form-group">
+            <label for="fornecedor">Fornecedor:</label>
+            <input type="text" id="fornecedor" name="fornecedor" class="form-control">
+        </div>
+
+        <!-- Validade do Produto -->
+        <div class="form-group">
+            <label for="validade_produto">Validade do Produto:</label>
+            <input type="date" id="validade_produto" name="validade_produto" class="form-control">
+        </div>
+
+        <!-- Localização do Produto -->
+        <div class="form-group">
+            <label for="localizacao_produto">Localização do Produto:</label>
+            <input type="text" id="localizacao_produto" name="localizacao_produto" class="form-control">
+        </div>
+
+        <!-- Lote do Produto -->
+        <div class="form-group">
+            <label for="lote_produto">Lote do Produto:</label>
+            <input type="text" id="lote_produto" name="lote_produto" class="form-control">
+        </div>
+
+        <!-- Data de Fabricação -->
+        <div class="form-group">
+            <label for="data_fabricacao">Data de Fabricação:</label>
+            <input type="date" id="data_fabricacao" name="data_fabricacao" class="form-control">
+        </div>
+
+        <!-- Data de Validade -->
+        <div class="form-group">
+            <label for="data_validade">Data de Validade:</label>
+            <input type="date" id="data_validade" name="data_validade" class="form-control">
+        </div>
+
+        <!-- Imagem do Produto -->
+        <div class="form-group">
+            <label for="imagem_produto">Imagem do Produto:</label>
+            <input type="file" id="imagem_produto" name="imagem_produto" class="form-control-file" accept="image/*">
+        </div>
+
+        <!-- Ingredientes do Produto -->
+        <div class="form-group">
+            <label for="ingredientes_produto">Ingredientes do Produto:</label>
+            <textarea id="ingredientes_produto" name="ingredientes_produto" class="form-control" rows="4"></textarea>
+        </div>
+
+        <!-- Benefícios do Produto -->
+        <div class="form-group">
+            <label for="beneficios_produto">Benefícios do Produto:</label>
+            <textarea id="beneficios_produto" name="beneficios_produto" class="form-control" rows="4"></textarea>
+        </div>
+
+        <!-- Sugestão de Uso -->
+        <div class="form-group">
+            <label for="sugestao_uso_produto">Sugestão de Uso:</label>
+            <textarea id="sugestao_uso_produto" name="sugestao_uso_produto" class="form-control" rows="4"></textarea>
+        </div>
+
+        <!-- Botão de Envio -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Salvar Produto</button>
+        </div>
+    </form>
 </div>
 
-<!-- Exibe mensagens de erro ou sucesso -->
-<?php if (session()->getFlashdata('error')): ?>
-<div class="alert alert-danger">
-    <?= session()->getFlashdata('error') ?>
-</div>
-<?php endif; ?>
+<!-- Incluindo os Scripts do Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<?php if (session()->getFlashdata('success')): ?>
-<div class="alert alert-success">
-    <?= session()->getFlashdata('success') ?>
-</div>
-<?php endif; ?>
-
-<div class="col-12 mt-3">
-    <div class="bs-stepper py-3 px-3">
-        <!-- Formulário de cadastro de categoria -->
-        <form action="<?= site_url('categoria/salvar') ?>" method="POST">
-            <!-- Campo Nome da Categoria -->
-            <div class="mb-3">
-                <label for="nome_categoria" class="form-label">Nome da Categoria</label>
-                <input type="text" class="form-control <?= session()->getFlashdata('error') ? 'is-invalid' : '' ?>"
-                    id="nome_categoria" name="nome_categoria" value="<?= old('nome_categoria') ?>" required>
-                <?php if (session()->getFlashdata('error')): ?>
-                <div class="invalid-feedback">
-                    <?= session()->getFlashdata('error') ?>
-                </div>
-                <?php endif; ?>
-            </div>
-
-            <!-- Botões -->
-            <div class="d-flex justify-content-between">
-                <a href="<?= site_url('categoria') ?>" class="btn btn-secondary">Voltar para Categorias</a>
-                <button type="submit" class="btn btn-primary">Gravar</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<?= $this->endSection() ?>
-
-<?= $this->section('js') ?>
-<!-- Aqui você pode adicionar scripts adicionais caso necessário -->
-<?= $this->endSection() ?>
+<?= $this->endsection() ?>
