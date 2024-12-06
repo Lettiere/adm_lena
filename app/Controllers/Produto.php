@@ -47,22 +47,21 @@ class Produto extends Controller
     // Salva o produto no banco de dados
     public function salvar()
     {
-        // Validação dos dados
         $validation = \Config\Services::validation();
 
         // Definindo as regras de validação
         $validation->setRules([
             'prod_categoria_id'     => 'required|integer',
-            'prod_subcategoria_id'   => 'permit_empty|integer',
-            'nome_produto'           => 'required|string|min_length[3]',
-            'codigo_barras'          => 'required|alpha_numeric|max_length[13]',
-            'descricao_produto'      => 'required|string',
-            'peso_produto'           => 'permit_empty|is_natural_no_zero',
-            'preco_custo'            => 'required|decimal|min_length[1]',
-            'preco_venda'            => 'required|decimal|min_length[1]',
-            'validade_produto'       => 'permit_empty|valid_date',
-            'localizacao_produto'    => 'permit_empty|string',
-            'imagem_produto'         => 'permit_empty|uploaded[imagem_produto]|max_size[imagem_produto,1024]|is_image[imagem_produto]',
+            'prod_subcategoria_id'  => 'permit_empty|integer',
+            'nome_produto'          => 'required|string|min_length[3]',
+            'codigo_barras'         => 'required|alpha_numeric|max_length[13]',
+            'descricao_produto'     => 'required|string',
+            'peso_produto'          => 'permit_empty|is_natural_no_zero',
+            'preco_custo'           => 'required|decimal|min_length[1]',
+            'preco_venda'           => 'required|decimal|min_length[1]',
+            'validade_produto'      => 'permit_empty|valid_date',
+            'localizacao_produto'   => 'permit_empty|string',
+            'imagem_produto'        => 'permit_empty|uploaded[imagem_produto]|max_size[imagem_produto,1024]|is_image[imagem_produto]',
         ]);
 
         // Verificando se a validação falhou
@@ -70,56 +69,56 @@ class Produto extends Controller
             return redirect()->back()->withInput()->with('errors', $validation->getErrors());
         }
 
-        // Processando a imagem (caso haja)
-        $imagemProduto = $this->request->getFile('imagem_produto');
-        $imagemNome = null;
+        // Caminho de upload das imagens
+        $uploadPath = ROOTPATH . 'public/assets/img/product/';
+        $uploadedImages = [];
 
-        if ($imagemProduto && $imagemProduto->isValid() && !$imagemProduto->hasMoved()) {
-            // Gerando um nome aleatório para a imagem
-            $imagemNome = $imagemProduto->getRandomName();
-            // Movendo a imagem para o diretório de uploads
-            $imagemProduto->move(WRITEPATH . 'uploads', $imagemNome);
+        // Manipulação de uploads de imagens
+        if ($file = $this->request->getFile('imagem_produto')) {
+            if ($file->isValid() && !$file->hasMoved()) {
+                // Gerar nome criptografado para a imagem
+                $newName = md5(uniqid(rand(), true)) . '.' . $file->getExtension();
+                // Mover o arquivo antes de qualquer outra operação
+                $file->move($uploadPath, $newName);
+                // Armazenar caminho da imagem se foi enviada
+                $uploadedImages['imagem_produto'] = 'assets/img/product/' . $newName;
+            }
         }
 
-        // Criando o produto
+        // Preparando os dados para salvar no banco
         $produtoModel = new ProdutoModel();
 
         $produtoData = [
             'prod_categoria_id'     => $this->request->getPost('prod_categoria_id'),
-            'prod_subcategoria_id'   => $this->request->getPost('prod_subcategoria_id'),
-            'nome_produto'           => $this->request->getPost('nome_produto'),
-            'codigo_barras'          => $this->request->getPost('codigo_barras'),
-            'descricao_produto'      => $this->request->getPost('descricao_produto'),
-            'subcategoria_produto'   => $this->request->getPost('subcategoria_produto'),
-            'dimensoes_produto'      => $this->request->getPost('dimensoes_produto'),
-            'peso_produto'           => $this->request->getPost('peso_produto'),
-            'cor_produto'            => $this->request->getPost('cor_produto'),
-            'material_embalagem'     => $this->request->getPost('material_embalagem'),
-            'temperatura_armazenamento' => $this->request->getPost('temperatura_armazenamento'),
-            'tabela_nutricional'     => $this->request->getPost('tabela_nutricional'),
-            'alergenos'              => $this->request->getPost('alergenos'),
-            'preco_custo'            => $this->request->getPost('preco_custo'),
-            'preco_venda'            => $this->request->getPost('preco_venda'),
-            'impostos'               => $this->request->getPost('impostos'),
-            'fornecedor'             => $this->request->getPost('fornecedor'),
-            'validade_produto'       => $this->request->getPost('validade_produto'),
-            'localizacao_produto'    => $this->request->getPost('localizacao_produto'),
-            'lote_produto'           => $this->request->getPost('lote_produto'),
-            'data_fabricacao'        => $this->request->getPost('data_fabricacao'),
-            'data_validade'          => $this->request->getPost('data_validade'),
-            'imagem_produto'         => $imagemNome,
-            'ingredientes_produto'   => $this->request->getPost('ingredientes_produto'),
-            'beneficios_produto'     => $this->request->getPost('beneficios_produto'),
-            'sugestao_uso_produto'   => $this->request->getPost('sugestao_uso_produto'),
+            'prod_subcategoria_id'  => $this->request->getPost('prod_subcategoria_id'),
+            'nome_produto'          => $this->request->getPost('nome_produto'),
+            'codigo_barras'         => $this->request->getPost('codigo_barras'),
+            'descricao_produto'     => $this->request->getPost('descricao_produto'),
+            'peso_produto'          => $this->request->getPost('peso_produto'),
+            'preco_custo'           => $this->request->getPost('preco_custo'),
+            'preco_venda'           => $this->request->getPost('preco_venda'),
+            'validade_produto'      => $this->request->getPost('validade_produto'),
+            'localizacao_produto'   => $this->request->getPost('localizacao_produto'),
+            'imagem_produto'        => $uploadedImages['imagem_produto'] ?? null,
         ];
 
         // Inserindo o produto no banco de dados
         if ($produtoModel->save($produtoData)) {
-            // Sucesso - redireciona para a lista de produtos
             return redirect()->to('/produto')->with('success', 'Produto cadastrado com sucesso!');
         } else {
-            // Falha - redireciona de volta ao formulário com erros
             return redirect()->back()->withInput()->with('errors', $produtoModel->errors());
         }
+    }
+
+    public function show($id)
+    {
+        $produtoModel = new ProdutoModel();
+        $produto = $produtoModel->find($id);
+
+        if (!$produto) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("Produto com ID $id não encontrado.");
+        }
+
+        return view('produto/show', ['produto' => $produto]); // Passa o produto para a view
     }
 }

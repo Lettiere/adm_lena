@@ -10,23 +10,19 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 
 
-// Rotas para a tela de produtos
-/* $routes->get('produtos', 'Produto::index', ['as' => 'produtos']);
-$routes->get('produto/create', 'Produto::create', ['as' => 'criar_produto']);  
-$routes->get('produto/show/(:num)', 'Produto::show/$1', ['as' => 'mostrar_produto']);
-$routes->get('produto/edit/(:num)', 'Produto::edit/$1', ['as' => 'editar_produto']);  
- */
 $routes->group('produto', ['namespace' => 'App\Controllers'], function ($routes) {
-    $routes->get(
-        '/',
-        'Produto::index',
-        ['as' => 'produtos']
-    );
+    $routes->get('/', 'Produto::index', ['as' => 'produtos']);
     $routes->get('create', 'Produto::create', ['as' => 'create_produto']);
     $routes->post('salvar', 'Produto::salvar', ['as' => 'save_produto']);
-    $routes->get('show/(:num)', 'Produto::show/$1', ['as' => 'show_produto']); // Rota para exibir o produto
+    $routes->get('show/(:num)', 'Produto::show/$1', ['as' => 'show_produto']); // Nova rota
 });
 
+$routes->group('products', ['namespace' => 'App\Controllers'], function ($routes) {
+    $routes->get('/', 'Produto::index', ['as' => 'produtos']);
+    $routes->get('create', 'Produto::create', ['as' => 'create_produto']);
+    $routes->post('salvar', 'Produto::salvar', ['as' => 'save_produto']);
+    $routes->get('show/(:num)', 'Produto::show/$1', ['as' => 'show_produto']); // Nova rota
+});
 
 // Rotas para a tela de categorias
 $routes->get('categoria', 'Categoria::index', ['as' => 'categoria']);  // Rota para a lista de categorias
