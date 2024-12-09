@@ -35,6 +35,8 @@
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet" />
 
+
+
     <!-- Icons -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/fonts/boxicons.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/fonts/fontawesome.css') ?>" />
@@ -70,6 +72,8 @@
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/select2/select2.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/bs-stepper/bs-stepper.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/@form-validation/umd/styles/index.min.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('assets/css/boxicons.css') ?>" />
+
 
     <!-- Mapas -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/leaflet/leaflet.css') ?>" />
@@ -90,6 +94,11 @@
 
     <!-- Importando os scripts e estilos do Select2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+
+
+
+
 </head>
 
 
@@ -162,8 +171,13 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="<?= base_url(route_to('produtos')) ?>" class="menu-link">
-                                    <div class="text-truncate" data-i18n="Produtos">Produtos</div>
+                                <a href="<?= base_url('produto') ?>" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Produto">Produto</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url(route_to('estoque')) ?>" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Estoque">Estoque</div>
                                 </a>
                             </li>
                         </ul>
@@ -673,7 +687,7 @@
                         <div class="mb-2 mb-md-0">
                             ©
                             <script>
-                                document.write(new Date().getFullYear());
+                            document.write(new Date().getFullYear());
                             </script>, feito com ❤️ por
                             <a href="https://akashi.app.br" target="_blank" class="footer-link fw-medium">Akashi</a>
                         </div>
@@ -703,7 +717,6 @@
     <div class="layout-overlay layout-menu-toggle"></div>
     <!-- Drag Target Area To SlideIn Menu On Small Screens -->
     <div class="drag-target"></div>
-
     </div>
     <script src="<?= base_url('assets/vendor/libs/chartjs/chartjs.js') ?>"></script>
     <script src="<?= base_url('assets/vendor/libs/jquery/jquery.js') ?>"></script>
@@ -733,8 +746,10 @@
     <script src="<?= base_url('assets/vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js') ?>"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="<?= base_url('assets/js/app-ecommerce-product-list.js') ?>"></script>
 
     <?= $this->renderSection('js') ?>
+
 
 
 </body>

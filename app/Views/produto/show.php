@@ -8,6 +8,9 @@
 
 <?= $this->section('content') ?>
 
+
+
+
 <div class="col-12 mt-3">
     <div class="row">
         <div class="col-12 col-md-9 mt-3 py-3">
@@ -238,10 +241,6 @@
         </div>
     </div>
 </div>
-
-
-<!-- Offcanvas -->
-<!-- Send Invoice Sidebar -->
 <div class="offcanvas offcanvas-end" id="sendInvoiceOffcanvas" aria-hidden="true">
     <div class="offcanvas-header mb-6 border-bottom">
         <h5 class="offcanvas-title">Send Invoice</h5>
@@ -284,9 +283,6 @@
         </form>
     </div>
 </div>
-<!-- /Send Invoice Sidebar -->
-
-<!-- Add Payment Sidebar -->
 <div class="offcanvas offcanvas-end" id="addPaymentOffcanvas" aria-hidden="true">
     <div class="offcanvas-header border-bottom">
         <h5 class="offcanvas-title">Add Payment</h5>
@@ -333,16 +329,6 @@
         </form>
     </div>
 </div>
-<!-- /Add Payment Sidebar -->
-
-<!-- /Offcanvas -->
-
-
-
-<!-- / Content -->
-
-
-
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>

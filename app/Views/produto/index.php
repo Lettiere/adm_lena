@@ -4,23 +4,57 @@
 <!-- Adiciona o CSS para o DataTables -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
+<!-- Adiciona o CSS para a responsividade da tabela -->
+<style>
+/* Esconde colunas específicas em telas menores */
+@media (max-width: 767px) {
+    .hide-mobile {
+        display: none !important;
+    }
+}
+
+/* Exibe todas as colunas em telas maiores */
+@media (min-width: 768px) {
+    .hide-mobile {
+        display: table-cell !important;
+    }
+}
+</style>
+<style>
+.custom-padding {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+</style>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<div class="container bs-stepper my-5">
-    <div class="col-12 my-3">
-        <table class="invoice-list-table table border-top dataTable no-footer dtr-column collapsed"
-            id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="row gy-4 gy-sm-1">
+                <!-- Widgets ou outros elementos permanecem aqui -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bs-stepper my-3 px-1">
+    <div class="col-12">
+        <table class="invoice-list-table table border-top dataTable no-footer dtr-column" id="DataTables_Table_0"
+            aria-describedby="DataTables_Table_0_info">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Referência</th>
-                    <th>Status</th>
+                    <th class="hide-mobile">Status</th>
                     <th>Produto</th>
-                    <th>Valor</th>
-                    <th>Data de Cadastro</th>
-                    <th>Balanço</th>
-                    <th>Ações</th>
+                    <th class="hide-mobile">Valor</th>
+                    <th class="hide-mobile">Data de Cadastro</th>
+                    <th class="hide-mobile">Balanço</th>
+                    <th class="hide-mobile">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +63,7 @@
                 <tr>
                     <td><?= $produto['prod_produto_id'] ?></td>
                     <td><?= $produto['codigo_barras'] ?></td>
-                    <td>
+                    <td class="hide-mobile">
                         <span class="badge rounded-pill p-1_5 bg-label-secondary">
                             <?= $produto['status'] ?? 'Ativo' ?>
                         </span>
@@ -52,19 +86,19 @@
                                 </span>
                                 <small class="d-block"><?= $produto['descricao_produto'] ?></small>
                             </div>
-
                         </div>
                     </td>
-                    <td><?= number_format($produto['preco_venda'], 2, ',', '.') ?></td>
-                    <td><?= date('d/m/Y', strtotime($produto['created_at'] ?? 'now')) ?></td>
-                    <td><span class="badge bg-label-success">Ativo</span></td>
-                    <td>
+                    <td class="hide-mobile"><?= number_format($produto['preco_venda'], 2, ',', '.') ?></td>
+                    <td class="hide-mobile"><?= date('d/m/Y', strtotime($produto['created_at'] ?? 'now')) ?></td>
+                    <td class="hide-mobile"><span class="badge bg-label-success">Ativo</span></td>
+                    <td class="hide-mobile">
                         <div class="d-flex">
-                            <a href="<?= site_url('produto/edit/' . $produto['prod_produto_id']) ?>"
+                            <a href="<?= route_to('update_estoque', $produto['prod_produto_id']) ?>"
                                 class="btn btn-icon" title="Editar">
                                 <i class="bx bx-edit"></i>
                             </a>
-                            <a href="<?= site_url('produto/delete/' . $produto['prod_produto_id']) ?>"
+
+                            <a href="<?= route_to('delete_estoque', $produto['prod_produto_id']) ?>"
                                 class="btn btn-icon text-danger" title="Deletar"
                                 onclick="return confirm('Tem certeza que deseja excluir este produto?')">
                                 <i class="bx bx-trash"></i>
