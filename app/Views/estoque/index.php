@@ -108,6 +108,7 @@
                                     <i class="bx bx-trash"></i>
                                 </a>
                             </div>
+                        </td>
 
                     </tr>
                     <?php endforeach; ?>

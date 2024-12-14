@@ -36,29 +36,26 @@ class Estoque extends BaseController
         return view('estoque/index', $data);
     }
 
-
     public function edit($id)
     {
-        log_message('debug', 'Edit chamado com ID: ' . $id);
+        // Verifica se o produto existe
+        $produto = $this->produtoModel->find($id);
 
-        // Busca os dados do estoque no banco, incluindo os dados do produto relacionado
-        $estoque = $this->estoqueModel
-            ->select('prod_estoque_tb.*, prod_produto_tb.nome_produto')
-            ->join('prod_produto_tb', 'prod_estoque_tb.prod_produto_id = prod_produto_tb.prod_produto_id')
-            ->where('prod_estoque_tb.prod_estoque_id', $id)
-            ->first();
-
-        if (!$estoque) {
-            // Redireciona para a lista com mensagem de erro se não encontrar o estoque
-            return redirect()->route('estoque')->with('error', 'Estoque não encontrado.');
+        if (!$produto) {
+            // Se não encontrar o produto, redireciona ou exibe uma mensagem de erro
+            return redirect()->to('/estoque')->with('error', 'Produto não encontrado.');
         }
 
-        // Passa os dados do estoque para a view
+        // Carregar a lista de produtos para o select (se necessário)
+        $produtos = $this->produtoModel->findAll();
+
+        // Carregar dados necessários para o formulário de edição
         $data = [
-            'estoque' => $estoque,
+            'produto' => $produto,
+            'produtos' => $produtos,  // Certifique-se de passar a lista de produtos
         ];
 
-        // Retorna a view de edição com os dados carregados
+        // Renderizar a view de edição
         return view('estoque/edit', $data);
     }
 }

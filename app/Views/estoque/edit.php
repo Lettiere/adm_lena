@@ -23,15 +23,15 @@
                         <div class="col-md-6">
                             <label for="prod_produto_id" class="form-label">Produto</label>
                             <select id="prod_produto_id" name="prod_produto_id" class="form-select">
-                                <option value="">Selecione um produto</option>
                                 <?php foreach ($produtos as $produto): ?>
-                                <option value="<?= $produto['prod_produto_id'] ?>"
-                                    <?= isset($estoque) && $estoque['prod_produto_id'] == $produto['prod_produto_id'] ? 'selected' : '' ?>>
+                                <option value="<?= $produto['produto_id'] ?>"
+                                    <?= isset($estoque) && $estoque['prod_produto_id'] == $produto['produto_id'] ? 'selected' : '' ?>>
                                     <?= $produto['nome_produto'] ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
+
 
                         <!-- Quantidades -->
                         <div class="col-md-6">

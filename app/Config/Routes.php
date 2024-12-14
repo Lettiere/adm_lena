@@ -27,17 +27,15 @@ $routes->group('produto', ['namespace' => 'App\Controllers'], function ($routes)
     $routes->get('create', 'Produto::create', ['as' => 'create_produto']);
     $routes->post('salvar', 'Produto::salvar', ['as' => 'save_produto']);
     $routes->get('show/(:num)', 'Produto::show/$1', ['as' => 'show_produto']); // Rota para exibir o produto
+    $routes->get('edit/(:num)', 'Produto::edit/$1', ['as' => 'edit_produto']); // Rota para editar o produto
 });
 
 
-/* Toras para a tela de estoque */
+/* Rotas para a tela de estoque */
 $routes->get('estoque', 'Estoque::index', ['as' => 'estoque']);
 $routes->get('estoque/create', 'Estoque::create', ['as' => 'criar_estoque']);
 $routes->get('estoque/show/(:num)', 'Estoque::show/$1', ['as' => 'mostrar_estoque']);
 $routes->get('estoque/edit/(:num)', 'Estoque::edit/$1', ['as' => 'editar_estoque']);
-
-
-
 
 
 // Rotas para a tela de categorias
