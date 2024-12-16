@@ -33,9 +33,20 @@ $routes->group('produto', ['namespace' => 'App\Controllers'], function ($routes)
 
 /* Rotas para a tela de estoque */
 $routes->get('estoque', 'Estoque::index', ['as' => 'estoque']);
-$routes->get('estoque/create', 'Estoque::create', ['as' => 'criar_estoque']);
-$routes->get('estoque/show/(:num)', 'Estoque::show/$1', ['as' => 'mostrar_estoque']);
-$routes->get('estoque/edit/(:num)', 'Estoque::edit/$1', ['as' => 'editar_estoque']);
+$routes->get('estoque_entradas', 'Estoque::entradas', ['as' => 'estoque_entradas']);
+$routes->get('estoque_saidas', 'Estoque::saidas', ['as' => 'estoque_saidas']);
+$routes->get('criar_estoque', 'Estoque::create', ['as' => 'criar_estoque']);
+$routes->get('mostrar_estoque/(:num)', 'Estoque::show/$1', ['as' => 'mostrar_estoque']);
+$routes->get('editar_estoque/(:num)', 'Estoque::edit/$1', ['as' => 'editar_estoque']);
+
+
+
+
+
+
+
+
+
 
 
 // Rotas para a tela de categorias

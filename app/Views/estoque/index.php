@@ -32,17 +32,23 @@
 <div class="col-12 my-3 px-1">
     <div class="card">
         <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <div class="col-auto">
+            <div class="d-flex justify-content-end">
+                <div class="col-auto me-2">
                     <a href="<?= site_url('produto/create') ?>" class="btn btn-primary">
                         <i class="bx bx-plus bx-sm me-1"></i>
                         Novo Cadastro
                     </a>
                 </div>
-                <div class="col-auto">
+                <div class="col-auto me-2">
                     <a href="<?= site_url('produto/relatorio') ?>" class="btn btn-info">
                         <i class="bx bx-file bx-sm me-1"></i>
                         Relatório
+                    </a>
+                </div>
+                <div class="col-auto">
+                    <a href="<?= site_url('estoque_entradas') ?>" class="btn btn-success">
+                        <i class="bx bx-log-in bx-sm me-1"></i>
+                        Entradas
                     </a>
                 </div>
             </div>
@@ -52,12 +58,11 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Referência</th>
-                        <th class="hide-mobile">Status</th>
                         <th>Produto</th>
                         <th class="hide-mobile">Valor</th>
                         <th class="hide-mobile">Data de Cadastro</th>
                         <th class="hide-mobile">Balanço</th>
+                        <th class="hide-mobile">Status</th>
                         <th class="hide-mobile">Ações</th>
                     </tr>
                 </thead>
@@ -66,12 +71,6 @@
                     <?php foreach ($produtos as $produto): ?>
                     <tr>
                         <td><?= $produto['prod_produto_id'] ?></td>
-                        <td><?= $produto['codigo_barras'] ?></td>
-                        <td class="hide-mobile">
-                            <span class="badge rounded-pill p-1_5 bg-label-secondary">
-                                <?= $produto['status'] ?? 'Ativo' ?>
-                            </span>
-                        </td>
                         <td>
                             <div class="d-flex align-items-center">
                                 <div class="avatar-wrapper">
@@ -93,9 +92,13 @@
                             </div>
                         </td>
                         <td class="hide-mobile"><?= number_format($produto['preco_venda'], 2, ',', '.') ?></td>
-                        <td class="hide-mobile"><?= date('d/m/Y', strtotime($produto['created_at'] ?? 'now')) ?>
-                        </td>
+                        <td class="hide-mobile"></td>
                         <td class="hide-mobile"><span class="badge bg-label-success">Ativo</span></td>
+                        <td class="hide-mobile">
+                            <span class="badge rounded-pill p-1_5 bg-label-secondary">
+                                <?= $produto['status'] ?? 'Ativo' ?>
+                            </span>
+                        </td>
                         <td class="hide-mobile">
                             <div class="d-flex">
                                 <a href="<?= base_url('estoque/edit/' . $produto['prod_produto_id']) ?>"

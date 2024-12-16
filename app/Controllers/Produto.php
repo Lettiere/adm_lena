@@ -184,6 +184,101 @@ class Produto extends Controller
         $uploadedImages = [];
 
         // Manipulação de uploads de imagens
+        $file = $this->request->getFile('imagem_produto');
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            // Gerar nome criptografado para a imagem
+            $newName = md5(uniqid(rand(), true)) . '.' . $file->getExtension();
+            // Mover o arquivo antes de qualquer outra operação
+            $file->move($uploadPath, $newName);
+            // Armazenar caminho da imagem se foi enviada
+            $uploadedImages['imagem_produto'] = 'assets/img/product/' . $newName;
+        }
+
+        // Preparando os dados para salvar no banco
+        $produtoModel = new ProdutoModel();
+
+        $produtoData = [
+            'prod_categoria_id'     => $this->request->getPost('prod_categoria_id'),
+            'prod_subcategoria_id'  => $this->request->getPost('prod_subcategoria_id'),
+            'nome_produto'          => $this->request->getPost('nome_produto'),
+            'codigo_barras'         => $this->request->getPost('codigo_barras'),
+            'descricao_produto'     => $this->request->getPost('descricao_produto'),
+            'peso_produto'          => $this->request->getPost('peso_produto'),
+            'preco_custo'           => $this->request->getPost('preco_custo'),
+            'preco_venda'           => $this->request->getPost('preco_venda'),
+            'validade_produto'      => $this->request->getPost('validade_produto'),
+            'localizacao_produto'   => $this->request->getPost('localizacao_produto'),
+            'imagem_produto'        => $uploadedImages['imagem_produto'] ?? null,
+            'subcategoria_produto'  => $this->request->getPost('subcategoria_produto'),
+            'dimensoes_produto'     => $this->request->getPost('dimensoes_produto'),
+            'cor_produto'           => $this->request->getPost('cor_produto'),
+            'material_embalagem'    => $this->request->getPost('material_embalagem'),
+            'temperatura_armazenamento' => $this->request->getPost('temperatura_armazenamento'),
+            'tabela_nutricional'    => $this->request->getPost('tabela_nutricional'),
+            'alergenos'             => $this->request->getPost('alergenos'),
+            'impostos'              => $this->request->getPost('impostos'),
+            'fornecedor'            => $this->request->getPost('fornecedor'),
+            'lote_produto'          => $this->request->getPost('lote_produto'),
+            'data_fabricacao'       => $this->request->getPost('data_fabricacao'),
+            'data_validade'         => $this->request->getPost('data_validade'),
+            'ingredientes_produto'  => $this->request->getPost('ingredientes_produto'),
+            'beneficios_produto'    => $this->request->getPost('beneficios_produto'),
+            'sugestao_uso_produto'  => $this->request->getPost('sugestao_uso_produto'),
+        ];
+
+        // Inserindo o produto no banco de dados
+        if ($produtoModel->save($produtoData)) {
+            return redirect()->to('/produto')->with('success', 'Produto cadastrado com sucesso!');
+        } else {
+            return redirect()->back()->withInput()->with('errors', $produtoModel->errors());
+        }
+    }
+
+    public function salvar_prod()
+    {
+        $validation = \Config\Services::validation();
+
+        // Definindo as regras de validação
+        $validation->setRules([
+            'prod_categoria_id'     => 'required|integer',
+            'prod_subcategoria_id'  => 'permit_empty|integer',
+            'nome_produto'          => 'required|string|min_length[3]',
+            'codigo_barras'         => 'required|alpha_numeric|max_length[13]',
+            'descricao_produto'     => 'required|string',
+            'peso_produto'          => 'permit_empty|is_natural_no_zero',
+            'preco_custo'           => 'required|decimal|min_length[1]',
+            'preco_venda'           => 'required|decimal|min_length[1]',
+            'validade_produto'      => 'permit_empty|valid_date',
+            'localizacao_produto'   => 'permit_empty|string',
+            'imagem_produto'        => 'permit_empty|uploaded[imagem_produto]|max_size[imagem_produto,1024]|is_image[imagem_produto]',
+            // Adicionando as validações dos novos campos
+            'subcategoria_produto'  => 'permit_empty|string',
+            'dimensoes_produto'     => 'permit_empty|string',
+            'cor_produto'           => 'permit_empty|string',
+            'material_embalagem'    => 'permit_empty|string',
+            'temperatura_armazenamento' => 'permit_empty|string',
+            'tabela_nutricional'    => 'permit_empty|string',
+            'alergenos'             => 'permit_empty|string',
+            'impostos'              => 'permit_empty|string',
+            'fornecedor'            => 'permit_empty|string',
+            'lote_produto'          => 'permit_empty|string',
+            'data_fabricacao'       => 'permit_empty|valid_date',
+            'data_validade'         => 'permit_empty|valid_date',
+            'ingredientes_produto'  => 'permit_empty|string',
+            'beneficios_produto'    => 'permit_empty|string',
+            'sugestao_uso_produto'  => 'permit_empty|string',
+        ]);
+
+        // Verificando se a validação falhou
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
+        // Caminho de upload das imagens
+        $uploadPath = ROOTPATH . 'public/assets/img/product/';
+        $uploadedImages = [];
+
+        // Manipulação de uploads de imagens
         if ($file = $this->request->getFile('imagem_produto')) {
             if ($file->isValid() && !$file->hasMoved()) {
                 // Gerar nome criptografado para a imagem
@@ -234,6 +329,11 @@ class Produto extends Controller
             return redirect()->back()->withInput()->with('errors', $produtoModel->errors());
         }
     }
+
+
+
+
+
 
 
     public function show($id)

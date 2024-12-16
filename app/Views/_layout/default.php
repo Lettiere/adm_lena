@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-<!DOCTYPE html>
 <html lang="pt-br" class="dark-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
     data-theme="theme-default" data-assets-path="<?= base_url('assets/') ?>" data-template="vertical-menu-template">
 
@@ -8,46 +6,33 @@
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Dona Lena | Cadastros</title>
-
-    <!-- SEO -->
-    <meta name="description"
-        content="A plataforma Dona Lena oferece soluções educacionais inovadoras, combinando tecnologia e simplicidade para transformar o aprendizado." />
-    <meta name="keywords"
-        content="educação, Dona Lena, plataforma educacional, tecnologia educacional, aprendizado, ensino" />
-    <meta name="author" content="Akashi Soluções" />
-    <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="Dona Lena | Educação" />
-    <meta property="og:description"
-        content="Conheça a Dona Lena, a plataforma que une inovação e simplicidade para o ensino e aprendizado." />
-    <meta property="og:image" content="<?= base_url('assets/img/brand/og-image.png') ?>" />
-    <meta property="og:url" content="<?= base_url() ?>" />
-    <meta property="og:type" content="website" />
-    <link rel="canonical" href="<?= base_url() ?>" />
-
+    <title>Akashi</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="canonical" href="" />
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="<?= base_url('assets/img/brand/favicon.png') ?>" />
-
+    <link rel="icon" type="image/x-icon" href="./assets/img/brand/favicon.png" />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet" />
-
-
-
     <!-- Icons -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/fonts/boxicons.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/fonts/fontawesome.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/fonts/flag-icons.css') ?>" />
-
+    <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="./assets/vendor/fonts/fontawesome.css" />
+    <link rel="stylesheet" href="./assets/vendor/fonts/flag-icons.css" />
     <!-- Core CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/css/rtl/core.css') ?>"
         class="template-customizer-core-css" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/css/rtl/theme-default.css') ?>"
         class="template-customizer-theme-css" />
-
+    <link rel="stylesheet" href="./assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="./assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
     <!-- Datatables -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') ?>">
     <link rel="stylesheet"
@@ -56,14 +41,19 @@
         href="<?= base_url('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') ?>">
-
+    <link rel="stylesheet" href="./assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+    <link rel="stylesheet" href="./assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+    <link rel="stylesheet" href="./assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css">
+    <link rel="stylesheet" href="./assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+    <link rel="stylesheet" href="./assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css">
     <!-- SweetAlert -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/animate-css/animate.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/sweetalert2/sweetalert2.css') ?>" />
-
+    <link rel="stylesheet" href="./assets/vendor/libs/animate-css/animate.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/sweetalert2/sweetalert2.css" />
     <!-- Datas -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/flatpickr/flatpickr.css') ?>" />
-
+    <link rel="stylesheet" href="./assets/vendor/libs/flatpickr/flatpickr.css" />
     <!-- Outros -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/toastr/toastr.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') ?>" />
@@ -72,34 +62,63 @@
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/select2/select2.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/bs-stepper/bs-stepper.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/@form-validation/umd/styles/index.min.css') ?>" />
-    <link rel="stylesheet" href="<?= base_url('assets/css/boxicons.css') ?>" />
-
-
+    <link rel="stylesheet" href="./assets/vendor/libs/toastr/toastr.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/typeahead-js/typeahead.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/select2/select2.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/bs-stepper/bs-stepper.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/@form-validation/umd/styles/index.min.css" />
     <!-- Mapas -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/leaflet/leaflet.css') ?>" />
-
+    <link rel="stylesheet" href="./assets/vendor/libs/leaflet/leaflet.css" />
     <!-- Gráficos -->
     <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/apex-charts/apex-charts.css') ?>" />
-
-    <!-- Render CSS CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/render-css/1.0.0/render.min.css" />
-
+    <link rel="stylesheet" href="./assets/vendor/libs/apex-charts/apex-charts.css" />
     <!-- Customizações -->
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>" />
-
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <!-- Helpers -->
     <script src="<?= base_url('assets/vendor/js/helpers.js') ?>"></script>
     <script src="<?= base_url('assets/vendor/js/template-customizer.js') ?>"></script>
     <script src="<?= base_url('assets/js/config.js') ?>"></script>
+    <script src="./assets/vendor/js/helpers.js"></script>
+    <script src="./assets/vendor/js/template-customizer.js"></script>
+    <script src="./assets/js/config.js"></script>
 
     <!-- Importando os scripts e estilos do Select2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
 
+    <!-- pre-matricula -->
+    <?php include('./assets/js/scripts.js'); ?>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Exibe os campos de pré-matrícula quando a opção "Pré-Matrícula" é selecionada
+        $('#tipoMatricula').change(function() {
+            if ($(this).val() === 'pre-matricula') {
+                $('#camposPreMatricula').show(); // Mostra os campos de pré-matrícula
+            } else {
+                $('#camposPreMatricula').hide(); // Oculta os campos de pré-matrícula
+            }
+        });
 
+        // Exibe o select de cidades se a resposta para transporte público for "sim"
+        $('#usaTransporte').change(function() {
+            if ($(this).val() === 'sim') {
+                $('#selectCidades').show(); // Mostra o select de cidades
+            } else {
+                $('#selectCidades').hide(); // Oculta o select de cidades
+            }
+        });
+    });
+    </script>
 
 
 </head>
+
 
 
 <body>
@@ -131,7 +150,7 @@
                         </a>
                     </li>
                     <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text" data-i18n="Secretária de Educação">Secretária de Educação</span>
+                        <span class="menu-header-text" data-i18n="Administração">Administração</span>
                     </li>
 
                     <li class="menu-item">
@@ -182,29 +201,37 @@
                             </li>
                         </ul>
                     </li>
-                    <!--   <li class="menu-item">
+
+                    <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div class="text-truncate" data-i18n="Acadêmico">Acadêmico</div>
+                            <div class="text-truncate" data-i18n="Estoque">Estoque</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="pre_matricula.php" class="menu-link">
-                                    <div class="text-truncate" data-i18n="Pré-Matricula">
-                                        Pré-Matricula
+                                <a href="<?= base_url(route_to('estoque')) ?>" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Lista">
+                                        Lista
                                     </div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="pre_matricula.php" class="menu-link">
-                                    <div class="text-truncate" data-i18n="Aceite">
-                                        Aceite
+                                <a href="<?= base_url(route_to('estoque_entradas')) ?>" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Entradas">
+                                        Entradas
+                                    </div>
+                                </a>
+                            </li>
+                            <li class=" menu-item">
+                                <a href="<?= base_url(route_to('estoque_saidas')) ?>" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Saidas">
+                                        Saídas
                                     </div>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-item">
+                    <!-- <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-user"></i>
                             <div class="text-truncate" data-i18n="Transporte">Transporte</div>

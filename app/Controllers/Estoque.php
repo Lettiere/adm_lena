@@ -37,6 +37,28 @@ class Estoque extends BaseController
     }
 
 
+    public function entradas()
+    {
+        // Carregar dados do estoque e produtos
+        $estoques = $this->estoqueModel->findAll();
+        $produtos = $this->produtoModel->findAll();
+
+        // Garantir que os dados sejam passados para a view
+        $data = [
+            'estoques' => $estoques,
+            'produtos' => $produtos,
+        ];
+
+        // Renderizar a view com os dados carregados
+        return view('estoque/entradas', $data);
+    }
+
+
+
+
+
+
+
     public function edit($id)
     {
         log_message('debug', 'Edit chamado com ID: ' . $id);
