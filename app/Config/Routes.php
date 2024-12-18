@@ -23,6 +23,7 @@ $routes->group('produto', ['namespace' => 'App\Controllers'], function ($routes)
     $routes->get('edit/(:num)', 'Produto::edit/$1', ['as' => 'edit_produto']); // Rota para editar o produto
 });
 $routes->post('produto/salvar', 'Produto::salvar');
+$routes->post('produto/update/(:num)', 'Produto::update/$1', ['as' => 'update_produto']);
 
 
 /* Rotas para a tela de estoque */

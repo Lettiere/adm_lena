@@ -199,21 +199,15 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <li class="menu-item">
+                        <a href="<?= base_url('produto') ?>" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div class="text-truncate" data-i18n="Transporte">Transporte</div>
+                            <div class="text-truncate" data-i18n="Produto">
+                                Produto
+                            </div>
                         </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="index_rota_aluno.php" class="menu-link">
-                                    <div class="text-truncate" data-i18n="Rota">
-                                        Pré-Matricula
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li> -->
+                    </li>
+
 
                 </ul>
             </aside>

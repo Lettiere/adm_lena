@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="divider text-start m-5">
-                        <div class="divider-text">Modo de Usar</div>
+                        <div class="divider-text">Dados do Produto</div>
                     </div>
                 </div>
 
