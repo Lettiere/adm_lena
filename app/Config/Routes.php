@@ -33,6 +33,8 @@ $routes->get('estoque_saidas', 'Estoque::saidas', ['as' => 'estoque_saidas']);
 $routes->get('criar_estoque', 'Estoque::create', ['as' => 'criar_estoque']);
 $routes->get('mostrar_estoque/(:num)', 'Estoque::show/$1', ['as' => 'mostrar_estoque']);
 $routes->get('editar_estoque/(:num)', 'Estoque::edit/$1', ['as' => 'editar_estoque']);
+$routes->post('estoque/salvarEstoque', 'Estoque::salvarEstoque', ['as' => 'salvarEstoque']);
+$routes->post('estoque/Adicionar', 'Estoque::Adicionar', ['as' => 'Adicionar']);
 
 
 
@@ -50,3 +52,10 @@ $routes->group('subcategoria', ['namespace' => 'App\Controllers'], function ($ro
     $routes->get('create', 'Subcategoria::create', ['as' => 'create']); // Tela de criação de subcategoria
     $routes->post('salvar', 'Subcategoria::salvar', ['as' => 'save_subcategoria']); // Processa o formulário de criação
 });
+
+/* Rotas para a tela de fornecedores */
+$routes->get('fornecedor', 'Fornecedor::index', ['as' => 'fornecedor']);
+$routes->get('fornecedor/create', 'Fornecedor::create', ['as' => 'create_fornecedor']);
+$routes->post('fornecedor/salvar', 'Fornecedor::salvar', ['as' => 'save_fornecedor']);
+$routes->get('fornecedor/show/(:num)', 'Fornecedor::show/$1', ['as' => 'show_fornecedor']);
+$routes->get('fornecedor/edit/(:num)', 'Fornecedor::edit/$1', ['as' => 'edit_fornecedor']);

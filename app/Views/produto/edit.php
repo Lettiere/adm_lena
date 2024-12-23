@@ -11,7 +11,6 @@
     <h4>Editar Produto</h4>
     <form action="<?= site_url('produto/update/' . $produto['prod_produto_id']) ?>" method="POST"
         enctype="multipart/form-data">
-
         <div class="">
             <div class="row">
                 <div class="col-xl-9 col-md-9 col-12">
@@ -142,6 +141,10 @@
                                     <input type="date" id="data_validade" name="data_validade" class="form-control"
                                         value="<?= $produto['data_validade'] ?>">
                                 </div>
+
+                                <div class="divider text-start">
+                                    <div class="divider-text">Adicionar Imagem</div>
+                                </div>
                                 <div class="form-group mt-3 col-12">
                                     <label for="imagem_produto">Imagem do Produto:</label>
                                     <input type="file" id="imagem_produto" name="imagem_produto"
@@ -152,27 +155,12 @@
                                     <?php endif; ?>
                                 </div>
 
-                                <div class="dropzone needsclick" id="dropzone-multi">
-                                    <div class="dz-message needsclick">
-                                        Drop files here or click to upload
-                                        <span class="note needsclick">(This is just a demo dropzone. Selected files
-                                            are
-                                            <span class="fw-medium">not</span> actually uploaded.)</span>
-                                    </div>
-                                    <div class="fallback">
-                                        <input name="file" type="file" />
-                                    </div>
-                                </div>
 
-
-
-
-                                <div class="form-group mt-3 col-12">
+                                <div class="form-group mt-5 col-12">
                                     <label for="ingredientes_produto">Ingredientes:</label>
                                     <textarea id="ingredientes_produto" name="ingredientes_produto" class="form-control"
                                         rows="4"><?= $produto['ingredientes_produto'] ?></textarea>
                                 </div>
-
                                 <div class="form-group mt-3 col-12">
                                     <label for="beneficios_produto">Benefícios:</label>
                                     <textarea id="beneficios_produto" name="beneficios_produto" class="form-control"
@@ -185,7 +173,13 @@
                 <div class="col-xl-3 col-md-3 col-12">
                     <div class="card">
                         <div class="card-body">
-                            <button type="submit" class="btn btn-primary btn-block">Atualizar Produto</button>
+                            <button type="submit" class="btn btn-primary col-12 mb-5"
+                                onclick="return confirm('Tem certeza que deseja atualizar este produto?')">
+                                Atualizar
+                                Produto</button>
+                            <button type="button" class="btn btn-secondary col-12"
+                                onclick="window.history.back()">Cancelar</button>
+
                         </div>
                     </div>
                 </div>

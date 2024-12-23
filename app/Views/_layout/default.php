@@ -96,12 +96,12 @@
                 <div class="app-brand akashi">
                     <a href="index.php" class="app-brand-link">
                         <span class="app-brand-logo akashi">
-                            <img class="img-fluid" height="40" alt="" src="./assets/img/brand/logo-menu.png" />
+                            <!--   <img class="img-fluid" height="40" alt="" src="./assets/img/brand/logo-menu.png" /> -->
                         </span>
-                        <img class="img-fluid app-brand-text akashi menu-tex" height="40" alt=""
+                        <!--  <img class="img-fluid app-brand-text akashi menu-tex" height="40" alt=""
                             src="./assets/img/brand/logo-akashi-dark.png"
-                            data-app-light-img="brand/logo-akashi-light.png"
-                            data-app-dark-img="brand/logo-akashi-dark.png" />
+                            data-app-light-img=""
+                            data-app-dark-img="" /> -->
                     </a>
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
                         <i class="bx bx-chevron-left bx-sm align-middle"></i>
@@ -118,13 +118,13 @@
                         </a>
                     </li>
                     <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text" data-i18n="Administração">Administração</span>
+                        <span class="menu-header-text" data-i18n="Gerenciamento">Gerenciamento</span>
                     </li>
 
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div class="text-truncate" data-i18n="Administrativo">Administrativo</div>
+                            <div class="text-truncate" data-i18n="Produtos">Produtos</div>
                         </a>
                         <ul class="menu-sub">
 
@@ -144,29 +144,52 @@
                                             <div class="text-truncate" data-i18n="Subcategoria">SubCategoria</div>
                                         </a>
                                     </li>
-                                    <!--     <li class="menu-item">
-                                        <a href="cadastrar_instituicao.php" class="menu-link">
-                                            <div class="text-truncate" data-i18n="Instituição">Instituição</div>
+
+                                </ul>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url('produto') ?>" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Produto">
+                                        Produto
+                                    </div>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-user"></i>
+                            <div class="text-truncate" data-i18n="Fornecedores">Fornecedores</div>
+                        </a>
+                        <ul class="menu-sub">
+
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div class="text-truncate" data-i18n="Cadastros">Cadastros</div>
+                                </a>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="<?= base_url('categoria') ?>" class="menu-link">
+                                            <div class="text-truncate" data-i18n="Categoria">Categoria</div>
                                         </a>
                                     </li>
+
                                     <li class="menu-item">
-                                        <a href="ver_cidadao.php" class="menu-link">
-                                            <div class="text-truncate" data-i18n="Repasse">Repasse</div>
+                                        <a href="<?= base_url('subcategoria') ?>" class="menu-link">
+                                            <div class="text-truncate" data-i18n="Subcategoria">SubCategoria</div>
                                         </a>
-                                    </li> -->
+                                    </li>
                                 </ul>
                             </li>
 
                             <li class="menu-item">
-                                <a href="<?= base_url('produto') ?>" class="menu-link">
-                                    <div class="text-truncate" data-i18n="Produto">Produto</div>
+                                <a href="<?= base_url('fornecedor') ?>" class="menu-link">
+                                    <div class="text-truncate" data-i18n="Fornecedor">Fornecedor</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="<?= base_url(route_to('estoque')) ?>" class="menu-link">
-                                    <div class="text-truncate" data-i18n="Estoque">Estoque</div>
-                                </a>
-                            </li>
+
                         </ul>
                     </li>
 
@@ -199,14 +222,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-item">
-                        <a href="<?= base_url('produto') ?>" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div class="text-truncate" data-i18n="Produto">
-                                Produto
-                            </div>
-                        </a>
-                    </li>
+
 
 
                 </ul>

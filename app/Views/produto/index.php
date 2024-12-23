@@ -6,31 +6,24 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
 
 <!-- Adiciona o CSS para a responsividade da tabela -->
+
 <style>
-    /* Esconde colunas específicas em telas menores */
     @media (max-width: 767px) {
-        .hide-mobile {
+        table .hide-mobile {
             display: none !important;
         }
     }
 
-    /* Exibe todas as colunas em telas maiores */
     @media (min-width: 768px) {
-        .hide-mobile {
+        table .hide-mobile {
             display: table-cell !important;
         }
     }
-
-    .custom-padding {
-        padding-left: 5px !important;
-        padding-right: 5px !important;
-    }
 </style>
+
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-
-
 
 <div class="d-flex justify-content-between mb-3">
     <a href="<?= base_url('produto/create') ?>" class="btn btn-primary">
@@ -45,9 +38,9 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Referência</th>
-                        <th class="hide-mobile">Status</th>
                         <th>Produto</th>
+                        <th class="hide-mobile">Status</th>
+                        <th>Referência</th>
                         <th class="hide-mobile">Valor</th>
                         <th class="hide-mobile">Data de Cadastro</th>
                         <th class="hide-mobile">Balanço</th>
@@ -59,12 +52,6 @@
                         <?php foreach ($produtos as $produto): ?>
                             <tr>
                                 <td><?= $produto['prod_produto_id'] ?></td>
-                                <td><?= $produto['codigo_barras'] ?></td>
-                                <td class="hide-mobile">
-                                    <span class="badge rounded-pill p-1_5 bg-label-secondary">
-                                        <?= $produto['status'] ?? 'Ativo' ?>
-                                    </span>
-                                </td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="avatar-wrapper">
@@ -89,6 +76,12 @@
                                         </div>
                                     </div>
                                 </td>
+                                <td class="hide-mobile">
+                                    <span class="badge rounded-pill p-1_5 bg-label-secondary">
+                                        <?= $produto['status'] ?? 'Ativo' ?>
+                                    </span>
+                                </td>
+                                <td class="hide-mobile"><?= $produto['codigo_barras'] ?></td>
                                 <td class="hide-mobile"><?= number_format($produto['preco_venda'], 2, ',', '.') ?></td>
                                 <td class="hide-mobile"><?= date('d/m/Y', strtotime($produto['created_at'] ?? 'now')) ?>
                                 </td>
@@ -117,26 +110,25 @@
                         </tr>
                     <?php endif; ?>
                 </tbody>
-
             </table>
         </div>
     </div>
+</div>
 
+<?= $this->endSection() ?>
 
-    <?= $this->endSection() ?>
-
-    <?= $this->section('js') ?>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#estoqueTable').DataTable({
-                "paging": true,
-                "searching": true,
-                "ordering": true,
-                "info": true
-            });
+<?= $this->section('js') ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#estoqueTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true
         });
-    </script>
-    <?= $this->endSection() ?>
+    });
+</script>
+<?= $this->endSection() ?>
