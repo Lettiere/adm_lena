@@ -87,7 +87,9 @@ error_reporting(E_ALL);
             </div>
 
             <!-- Botão de Adicionar Produto -->
-            <button type="button" class="btn btn-primary mb-3" id="adicionarProduto">Adicionar Produto</button>
+            <div class="d-flex justify-content-end mt-3">
+                <button type="button" class="btn btn-primary mb-3" id="adicionarProduto">Adicionar Produto</button>
+            </div>
 
             <!-- Tabela Dinâmica para Exibir os Produtos Selecionados -->
             <table id="tabelaProdutos" class="table table-striped mt-3">
@@ -103,6 +105,15 @@ error_reporting(E_ALL);
                         <th>Ações</th>
                     </tr>
                 </thead>
+                <tbody>
+                    <tr id="linhaResumo">
+                        <td><strong>Total</strong></td>
+                        <td id="totalItens">0</td>
+                        <td></td>
+                        <td id="valorTotalGeral">0.00</td>
+                        <td colspan="4"></td>
+                    </tr>
+                </tbody>
                 <tbody id="estoqueTableBody">
                     <!-- Produtos serão adicionados dinamicamente -->
                 </tbody>
@@ -152,9 +163,26 @@ let fornecedorId = "<?= isset($_POST['fornecedor_id']) ? $_POST['fornecedor_id']
 
 let produtosAdicionados = []; // Armazena IDs de produtos adicionados
 
-// Evento para adicionar produto
+// Função para calcular totais
+function calcularTotais() {
+    let totalItens = 0;
+    let valorTotalGeral = 0;
+
+    document.querySelectorAll('#estoqueTableBody tr').forEach(row => {
+        const quantidade = parseInt(row.querySelector('.quantidade').value) || 0;
+        const precoUnitario = parseFloat(row.querySelector('.preco-unitario').value) || 0;
+        const valorTotal = quantidade * precoUnitario;
+
+        totalItens += quantidade;
+        valorTotalGeral += valorTotal;
+    });
+
+    document.getElementById('totalItens').innerText = totalItens;
+    document.getElementById('valorTotalGeral').innerText = valorTotalGeral.toFixed(2);
+}
+
+// Atualizar totais após adicionar produto
 document.getElementById('adicionarProduto').addEventListener('click', function() {
-    // Obter valores do formulário
     const produtoSelect = document.getElementById('produto');
     const produtoId = produtoSelect.value;
     const produtoText = produtoSelect.options[produtoSelect.selectedIndex]?.text || '';
@@ -164,67 +192,73 @@ document.getElementById('adicionarProduto').addEventListener('click', function()
     const precoUnitario = parseFloat(precoUnitarioInput.value) || 0;
     const valorTotal = quantidade * precoUnitario;
 
-    // Validação de campos
     if (!produtoId || quantidade <= 0 || precoUnitario <= 0) {
         alert("Preencha corretamente o Produto, Quantidade e Preço Unitário.");
         return;
     }
 
-    // Verificar duplicidade
     if (produtosAdicionados.includes(produtoId)) {
         alert("Este produto já foi adicionado. Por favor, escolha um produto diferente.");
         return;
     }
 
-    // Adicionar produto na tabela
     const tableBody = document.getElementById('estoqueTableBody');
-    const newRow = document.createElement('tr');
-
-    newRow.innerHTML = `
-        <td>
-            <input type='hidden' name='estoque[${produtoId}][produto_id]' value='${produtoId}'>
-            ${produtoText}
-        </td>
-        <td>
-            <input type='number' class='form-control quantidade' name='estoque[${produtoId}][quantidade_item]' value='${quantidade}' min='1'>
-        </td>
-        <td>
-            <input type='number' class='form-control preco-unitario' name='estoque[${produtoId}][preco_unitario_item]' value='${precoUnitario}' min='0.01' step='0.01'>
-        </td>
-        <td>
-            <span class='valor-total'>${valorTotal.toFixed(2)}</span>
-        </td>
-        <td class="hidden">
-            <input type='hidden' name='estoque[${produtoId}][numero_nf]' value='${numeroNF}'>
-        </td>
-        <td class="hidden">
-            <input type='hidden' name='estoque[${produtoId}][data_emissao_nf]' value='${dataEmissao}'>
-        </td>
-        <td class="hidden">
-            <input type='hidden' name='estoque[${produtoId}][fornecedor_id]' value='${fornecedorId}'>
-        </td>
-        <td>
-            <button type='button' class='btn btn-danger btn-sm remove-product'>Remover</button>
-        </td>
+    const newRow = `
+        <tr>
+            <td>
+                <input type='hidden' name='estoque[${produtoId}][produto_id]' value='${produtoId}'>
+                ${produtoText}
+            </td>
+            <td>
+                <input type='number' class='form-control quantidade' name='estoque[${produtoId}][quantidade_item]' value='${quantidade}' min='1'>
+            </td>
+            <td>
+                <input type='number' class='form-control preco-unitario' name='estoque[${produtoId}][preco_unitario_item]' value='${precoUnitario}' min='0.01' step='0.01'>
+            </td>
+            <td>
+                <span class='valor-total'>${valorTotal.toFixed(2)}</span>
+            </td>
+            <td class="hidden">
+                <input type='hidden' name='estoque[${produtoId}][numero_nf]' value='${numeroNF}'>
+            </td>
+            <td class="hidden">
+                <input type='hidden' name='estoque[${produtoId}][data_emissao_nf]' value='${dataEmissao}'>
+            </td>
+            <td class="hidden">
+                <input type='hidden' name='estoque[${produtoId}][fornecedor_id]' value='${fornecedorId}'>
+            </td>
+            <td>
+                <button type='button' class='btn btn-danger btn-sm remove-product'>Remover</button>
+            </td>
+        </tr>
     `;
 
-    tableBody.appendChild(newRow);
-    produtosAdicionados.push(produtoId); // Adiciona o produto à lista
+    tableBody.insertAdjacentHTML('afterbegin', newRow);
+    produtosAdicionados.push(produtoId);
 
     limparCamposProduto();
-    newRow.querySelector('.remove-product').addEventListener('click', function() {
-        newRow.remove();
+    calcularTotais();
+
+    // Eventos de atualização de valores
+    const firstRow = tableBody.querySelector('tr');
+    firstRow.querySelector('.remove-product').addEventListener('click', function() {
+        firstRow.remove();
         produtosAdicionados.splice(produtosAdicionados.indexOf(produtoId), 1);
+        calcularTotais();
     });
-    newRow.querySelectorAll('.quantidade, .preco-unitario').forEach(cell => {
+
+    firstRow.querySelectorAll('.quantidade, .preco-unitario').forEach(cell => {
         cell.addEventListener('input', function() {
-            const newQuantidade = parseInt(newRow.querySelector('.quantidade').value) || 0;
-            const newPreco = parseFloat(newRow.querySelector('.preco-unitario').value) || 0;
+            const newQuantidade = parseInt(firstRow.querySelector('.quantidade').value) || 0;
+            const newPreco = parseFloat(firstRow.querySelector('.preco-unitario').value) || 0;
             const newTotal = newQuantidade * newPreco;
-            newRow.querySelector('.valor-total').innerText = newTotal.toFixed(2);
+            firstRow.querySelector('.valor-total').innerText = newTotal.toFixed(2);
+            calcularTotais();
         });
     });
 });
+
+
 
 function limparCamposProduto() {
     document.getElementById('produto').value = '';

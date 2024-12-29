@@ -24,14 +24,12 @@
 }
 </style>
 <?= $this->endSection('css') ?>
-
 <?= $this->section('content') ?>
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 ?>
-
 <div class="col-12 mt-3">
     <div class="bs-stepper py-3 px-3">
         <form id="estoqueForm" action="<?= base_url('estoque/Adicionar') ?>" method="post">
@@ -95,13 +93,13 @@ error_reporting(E_ALL);
             <table id="tabelaProdutos" class="table table-striped mt-3">
                 <thead>
                     <tr>
-                        <th style="width: 40%;">Produto</th> <!-- 40% para Produto -->
-                        <th style="width: 20%;">Quantidade</th> <!-- 20% para Quantidade -->
-                        <th style="width: 20%;">Preço Unitário</th> <!-- 20% para Preço Unitário -->
-                        <th style="width: 20%;">Valor Total</th> <!-- 20% para Valor Total -->
-                        <th class="hidden" style="width: 0;">Número da NF/Pedido</th> <!-- Oculto -->
-                        <th class="hidden" style="width: 0;">Data de Emissão</th> <!-- Oculto -->
-                        <th class="hidden" style="width: 0;">Fornecedor</th> <!-- Oculto -->
+                        <th style="width: 40%;">Produto</th>
+                        <th style="width: 20%;">Quantidade</th>
+                        <th style="width: 20%;">Preço Unitário</th>
+                        <th style="width: 20%;">Valor Total</th>
+                        <th class="hidden" style="width: 0;">Número da NF/Pedido</th>
+                        <th class="hidden" style="width: 0;">Data de Emissão</th>
+                        <th class="hidden" style="width: 0;">Fornecedor</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -147,33 +145,38 @@ error_reporting(E_ALL);
 <?= $this->endSection('') ?>
 <?= $this->Section('js') ?>
 <script>
-let produtosAdicionados = []; // Array para armazenar os IDs dos produtos já adicionados
+// Atribuindo valores de PHP para variáveis JS
+let numeroNF = "<?= isset($_POST['numero_nf']) ? $_POST['numero_nf'] : ''; ?>";
+let dataEmissao = "<?= isset($_POST['data_emissao_nf']) ? $_POST['data_emissao_nf'] : ''; ?>";
+let fornecedorId = "<?= isset($_POST['fornecedor_id']) ? $_POST['fornecedor_id'] : ''; ?>";
 
+let produtosAdicionados = []; // Armazena IDs de produtos adicionados
+
+// Evento para adicionar produto
 document.getElementById('adicionarProduto').addEventListener('click', function() {
-    // Obter os valores do formulário
+    // Obter valores do formulário
     const produtoSelect = document.getElementById('produto');
-    const produtoId = produtoSelect.value; // Obter o ID do produto selecionado
+    const produtoId = produtoSelect.value;
     const produtoText = produtoSelect.options[produtoSelect.selectedIndex]?.text || '';
     const quantidadeInput = document.getElementById('quantidade');
     const precoUnitarioInput = document.getElementById('precoUnitario');
-
     const quantidade = parseInt(quantidadeInput.value) || 0;
     const precoUnitario = parseFloat(precoUnitarioInput.value) || 0;
     const valorTotal = quantidade * precoUnitario;
 
-    // Validação dos campos
+    // Validação de campos
     if (!produtoId || quantidade <= 0 || precoUnitario <= 0) {
         alert("Preencha corretamente o Produto, Quantidade e Preço Unitário.");
         return;
     }
 
-    // Verificar se o produto já foi adicionado
+    // Verificar duplicidade
     if (produtosAdicionados.includes(produtoId)) {
         alert("Este produto já foi adicionado. Por favor, escolha um produto diferente.");
         return;
     }
 
-    // Adicionar produto à tabela dinâmica
+    // Adicionar produto na tabela
     const tableBody = document.getElementById('estoqueTableBody');
     const newRow = document.createElement('tr');
 
@@ -191,24 +194,28 @@ document.getElementById('adicionarProduto').addEventListener('click', function()
         <td>
             <span class='valor-total'>${valorTotal.toFixed(2)}</span>
         </td>
+        <td class="hidden">
+            <input type='hidden' name='estoque[${produtoId}][numero_nf]' value='${numeroNF}'>
+        </td>
+        <td class="hidden">
+            <input type='hidden' name='estoque[${produtoId}][data_emissao_nf]' value='${dataEmissao}'>
+        </td>
+        <td class="hidden">
+            <input type='hidden' name='estoque[${produtoId}][fornecedor_id]' value='${fornecedorId}'>
+        </td>
         <td>
             <button type='button' class='btn btn-danger btn-sm remove-product'>Remover</button>
         </td>
     `;
 
     tableBody.appendChild(newRow);
-    produtosAdicionados.push(produtoId);
+    produtosAdicionados.push(produtoId); // Adiciona o produto à lista
 
-    // Limpar apenas os campos relacionados ao produto
     limparCamposProduto();
-
-    // Adicionar evento de remoção ao botão
     newRow.querySelector('.remove-product').addEventListener('click', function() {
         newRow.remove();
         produtosAdicionados.splice(produtosAdicionados.indexOf(produtoId), 1);
     });
-
-    // Atualizar o valor total dinamicamente
     newRow.querySelectorAll('.quantidade, .preco-unitario').forEach(cell => {
         cell.addEventListener('input', function() {
             const newQuantidade = parseInt(newRow.querySelector('.quantidade').value) || 0;
@@ -219,27 +226,20 @@ document.getElementById('adicionarProduto').addEventListener('click', function()
     });
 });
 
-/**
- * Função para limpar apenas os campos do produto após adicionar à tabela
- */
 function limparCamposProduto() {
     document.getElementById('produto').value = '';
-    $('#produto').trigger('change'); // Resetar Select2
+    $('#produto').trigger('change'); // Reset Select2
     document.getElementById('quantidade').value = '';
     document.getElementById('precoUnitario').value = '';
 }
 
-/**
- * Função para limpar todos os campos do formulário
- */
 function limparFormularioCompleto() {
     document.getElementById('numeroPedido').value = '';
     document.getElementById('dataEmissao').value = '';
     document.getElementById('fornecedor').value = '';
-    $('#fornecedor').trigger('change'); // Resetar Select2
+    $('#fornecedor').trigger('change'); // Reset Select2
     limparCamposProduto();
 
-    // Limpar tabela de produtos
     const tableBody = document.getElementById('estoqueTableBody');
     while (tableBody.firstChild) {
         tableBody.removeChild(tableBody.firstChild);
@@ -247,17 +247,40 @@ function limparFormularioCompleto() {
 
     produtosAdicionados = [];
 }
+document.querySelector('button[type="submit"].btn-success').addEventListener('click', function(event) {
+    event.preventDefault(); // Impede a submissão do formulário
+    if (produtosAdicionados.length === 0) {
+        alert('Adicione ao menos um produto antes de enviar!');
+        return;
+    }
+    $('#confirmacaoModal').modal('show');
+});
 
-// Evento de envio do formulário
+document.getElementById('confirmarEnvioModal').addEventListener('click', function() {
+    document.getElementById('estoqueForm').submit();
+    $('#confirmacaoModal').modal('hide');
+});
 document.getElementById('estoqueForm').addEventListener('submit', function(event) {
     if (produtosAdicionados.length === 0) {
         alert('Adicione ao menos um produto antes de enviar!');
         event.preventDefault();
         return;
     }
+    let valid = true;
 
-    // Enviar formulário
-    alert("Formulário enviado com sucesso!");
+    document.querySelectorAll('#estoqueTableBody tr').forEach(row => {
+        const quantidade = parseInt(row.querySelector('.quantidade').value) || 0;
+        const precoUnitario = parseFloat(row.querySelector('.preco-unitario').value) || 0;
+
+        if (quantidade <= 0 || precoUnitario <= 0) {
+            valid = false;
+            alert(`Corrija os valores do Produto: ${row.children[0].innerText}`);
+        }
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
 });
+document.getElementById('limparFormulario').addEventListener('click', limparFormularioCompleto);
 </script>
 <?= $this->endSection('') ?>
