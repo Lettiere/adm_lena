@@ -97,15 +97,17 @@
                         </td>
                         <td class="hide-mobile"><?= number_format($produto['preco_venda'], 2, ',', '.') ?></td>
                         <td class="hide-mobile"></td>
-                        <td class="hide-mobile"><span class="badge bg-label-success">Ativo</span></td>
                         <td class="hide-mobile">
                             <span class="badge rounded-pill p-1_5 bg-label-secondary">
-                                <?= $produto['status'] ?? 'Ativo' ?>
+                                <?= isset($quantidades_por_produto[$produto['prod_produto_id']])
+                                            ? number_format($quantidades_por_produto[$produto['prod_produto_id']], 0, ',', '.')
+                                            : '0' ?>
                             </span>
                         </td>
+                        <td id="balanco" class="hide-mobile"><span class="badge bg-label-success">Ativo</span></td>
                         <td class="hide-mobile">
                             <div class="d-flex">
-                                <a href="<?= base_url('estoque/edit/' . $produto['prod_produto_id']) ?>"
+                                <a href="<?= site_url('editar_estoque/' . $produto['prod_produto_id']) ?>"
                                     class="btn btn-icon" title="Editar">
                                     <i class="bx bx-edit"></i>
                                 </a>
@@ -116,7 +118,6 @@
                                 </a>
                             </div>
                         </td>
-
                     </tr>
                     <?php endforeach; ?>
                     <?php else: ?>
@@ -129,8 +130,6 @@
         </div>
     </div>
 </div>
-
-
 <div class="bs-stepper ">
     <div class="col-12">
         <div class="card">
@@ -141,7 +140,6 @@
     </div>
 </div>
 <?= $this->endSection() ?>
-
 <?= $this->section('js') ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>

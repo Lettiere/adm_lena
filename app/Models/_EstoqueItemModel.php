@@ -9,7 +9,6 @@ class EstoqueItemModel extends Model
     protected $table = 'base_estoque_item_tb'; // Nome da tabela
     protected $primaryKey = 'base_estoque_item_id'; // Chave primária
 
-    // Campos que podem ser preenchidos
     protected $allowedFields = [
         'base_estoque_lancamento_id',
         'produto_id',
@@ -18,12 +17,10 @@ class EstoqueItemModel extends Model
         'valor_total_item',
     ];
 
-    // Ativando timestamps automáticos
     protected $useTimestamps = true;
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
 
-    // Tipos de dados para validação
     protected $validationRules = [
         'base_estoque_lancamento_id' => 'required|integer',
         'produto_id' => 'required|integer',
@@ -55,7 +52,6 @@ class EstoqueItemModel extends Model
         ],
     ];
 
-    // Método para recuperar os itens de estoque por lançamento
     public function getItemsByLancamentoId($lancamentoId)
     {
         return $this->where('base_estoque_lancamento_id', $lancamentoId)

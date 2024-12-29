@@ -6,14 +6,12 @@ use CodeIgniter\Model;
 
 class EstoqueModel extends Model
 {
-    protected $table = 'prod_estoque_tb'; // Nome da tabela
-    protected $primaryKey = 'prod_estoque_id'; // Chave primária
+    protected $table = 'prod_estoque_tb';
+    protected $primaryKey = 'prod_estoque_id';
 
-    // Ativando uso de soft deletes
     protected $useSoftDeletes = true;
     protected $deletedField = 'deleted_at';
 
-    // Campos que podem ser preenchidos
     protected $allowedFields = [
         'prod_produto_id',
         'quantidade_disponivel',
@@ -29,15 +27,13 @@ class EstoqueModel extends Model
         'status_estoque',
         'alerta_reposicao',
         'created_at',
-        'updated_at',
+        'updated_at'
     ];
 
-    // Ativando timestamps automáticos
     protected $useTimestamps = true;
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
 
-    // Regras de validação
     protected $validationRules = [
         'prod_produto_id' => 'required|integer',
         'quantidade_disponivel' => 'required|integer',
@@ -62,35 +58,8 @@ class EstoqueModel extends Model
         ],
     ];
 
-    // Métodos personalizados
-
     /**
-     * Retorna o estoque de um produto com base no ID.
-     *
-     * @param int $productId - ID do produto.
-     * @return array
-     */
-    public function getStockWithProduct($productId)
-    {
-        return $this->where('prod_produto_id', $productId)
-            ->where('deleted_at', null)
-            ->findAll();
-    }
-
-    /**
-     * Retorna produtos com estoque baixo.
-     *
-     * @return array
-     */
-    public function alertLowStock()
-    {
-        return $this->where('quantidade_disponivel <= quantidade_minima')
-            ->where('deleted_at', null)
-            ->findAll();
-    }
-
-    /**
-     * Salva um lançamento de estoque com seus itens.
+     * Método para salvar o lançamento de estoque e os itens relacionados.
      *
      * @param array $dadosEstoque - Dados gerais do estoque.
      * @param array $itensEstoque - Lista de itens do estoque.
@@ -98,71 +67,37 @@ class EstoqueModel extends Model
      */
     public function salvarLancamentoComItens($dadosEstoque, $itensEstoque)
     {
-        // Valida os dados principais do estoque
+        // Valida os dados gerais do estoque
         if (!$this->validate($dadosEstoque)) {
-            return false; // Se os dados principais falharem na validação
+            return false;
         }
 
-        // Valida os itens de estoque
-        foreach ($itensEstoque as $item) {
-            if (!$this->validate($item)) {
-                return false; // Se algum item falhar na validação
-            }
-        }
-
-        $this->db->transStart(); // Inicia a transação
+        // Inicia a transação para garantir que os dados sejam salvos de forma atômica
+        $this->db->transStart();
 
         try {
             // Salva os dados principais do estoque
             $this->insert($dadosEstoque);
-            $estoqueId = $this->insertID();
+            $estoqueId = $this->insertID(); // Obtém o ID do estoque inserido
 
-            // Salva os itens relacionados ao estoque
+            // Agora, insere cada item de estoque
             $estoqueItemModel = new EstoqueItemModel();
             foreach ($itensEstoque as $item) {
-                $item['prod_estoque_id'] = $estoqueId; // Relaciona com o estoque principal
+                // Relaciona o item ao estoque principal, definindo o estoque_id
+                $item['base_estoque_lancamento_id'] = $estoqueId;
                 $estoqueItemModel->insert($item);
             }
 
-            $this->db->transComplete(); // Finaliza a transação
+            // Finaliza a transação
+            $this->db->transComplete();
 
-            return $this->db->transStatus(); // Retorna se a transação foi bem-sucedida
+            // Retorna se a transação foi bem-sucedida
+            return $this->db->transStatus();
         } catch (\Exception $e) {
-            $this->db->transRollback(); // Reverte a transação em caso de erro
+            // Reverte a transação caso haja algum erro
+            $this->db->transRollback();
             log_message('error', 'Erro ao salvar estoque: ' . $e->getMessage());
             return false;
         }
-    }
-
-    /**
-     * Atualiza a quantidade de estoque após a entrada de um produto.
-     *
-     * @param int $estoqueId - ID do estoque.
-     * @param int $quantidade - Quantidade a ser atualizada.
-     * @return bool
-     */
-    public function atualizarQuantidadeEstoque($estoqueId, $quantidade)
-    {
-        $estoque = $this->find($estoqueId);
-
-        if ($estoque) {
-            $estoque['quantidade_disponivel'] += $quantidade;
-            return $this->save($estoque);
-        }
-
-        return false;
-    }
-
-    /**
-     * Retorna o estoque com base no ID de lote.
-     *
-     * @param string $numeroLote - Número do lote.
-     * @return array
-     */
-    public function getStockByLote($numeroLote)
-    {
-        return $this->where('numero_lote', $numeroLote)
-            ->where('deleted_at', null)
-            ->findAll();
     }
 }
